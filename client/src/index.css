@@ -20,7 +20,7 @@ main {
   text-align: center;
 }
 
-button {
+.get-word-button {
   border: solid .15rem royalblue;
   background: royalblue;
   color: white;
@@ -32,10 +32,31 @@ button {
   transition: border 150ms, background 150ms;
 }
 
-button:hover,
-button:focus {
+.get-word-button:hover,
+.get-word-button:focus {
   border-color: navy;
   background: navy;
+}
+
+.get-word-button:disabled {
+  cursor: not-allowed;
+  border-color: #999;
+  background: #999;
+}
+
+.toggle-definitions-button {
+  color: royalblue;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  padding: 0;
+  cursor: pointer;
+  transition: color 150ms;
+}
+
+.toggle-definitions-button:hover,
+.toggle-definitions-button:focus {
+  color: navy;
 }
 
 h2,
