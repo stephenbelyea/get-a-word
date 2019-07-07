@@ -60,6 +60,7 @@ class App extends React.Component {
         {term && !loading && (
           <div className="got-word">
             <h2>{term}</h2>
+            {definitions.length === 0 && <p>No definition(s) found</p>}
             {definitions.length > 0 && (
               <>
                 <p>
