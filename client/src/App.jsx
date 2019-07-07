@@ -5,52 +5,62 @@ class App extends React.Component {
     super(props);
     this.state = {
       term: "",
-      definitions: []
+      definitions: [],
+      loading: false
     };
+    this.handleGetWord = this.handleGetWord.bind(this);
   }
 
   async getTermAndDefinitions() {
+    this.setState(() => ({ loading: true }));
     try {
       const response = await fetch(
         "http://localhost:3001/term-and-definitions",
         { mode: "cors" }
       );
       const { term, definitions } = await response.json();
-      this.setState(state => {
-        return {
-          term,
-          definitions
-        };
-      });
+      this.setState(() => ({
+        term,
+        definitions,
+        loading: false
+      }));
     } catch (e) {
       console.error(e.error);
+      this.setState(() => ({ loading: false }));
     }
   }
 
-  componentDidMount() {
+  handleGetWord() {
     this.getTermAndDefinitions();
   }
 
   render() {
-    const { term, definitions } = this.state;
-    if (!term) {
-      return null;
-    }
+    const { term, definitions, loading } = this.state;
     return (
       <main>
-        <h1>{term}</h1>
-        <ul>
-          {definitions.map(def => (
-            <li key={def.id}>
-              {def.type && (
-                <span className="type">
-                  (<em>{def.type}</em>){" "}
-                </span>
-              )}
-              <span className="value">{def.value}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="get-word">
+          <h1>Get A Word</h1>
+          <button onClick={this.handleGetWord} disabled={loading}>
+            Get Word!
+          </button>
+        </div>
+        {term && !loading && (
+          <div className="got-word">
+            <h2>{term}</h2>
+            <ul>
+              {definitions.map(def => (
+                <li key={def.id}>
+                  {def.type && (
+                    <span className="type">
+                      (<em>{def.type}</em>){" "}
+                    </span>
+                  )}
+                  <span className="value">{def.value}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </main>
     );
   }
