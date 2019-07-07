@@ -35,17 +35,17 @@ function getTermAndDefinitionsFromScrapeHtml(scrapeHtml) {
   };
 }
 
-function getTermAndDefinitions() {
-  const scrapeUrl = 'https://www.wordnik.com/randoml';
-  return rp(scrapeUrl)
-    .then(getTermAndDefinitionsFromScrapeHtml)
-    .catch(function (error) {
-      return error;
-    });
+async function getTermAndDefinitions() {
+  try {
+    const scrapeHtml = await rp('https://www.wordnik.com/randoml');
+    return getTermAndDefinitionsFromScrapeHtml(scrapeHtml);
+  } catch (e) {
+    return Promise.reject('Could not get term and definitions');
+  }
 }
 
-const scrape = {
+const termAndDefinitions = {
   getTermAndDefinitions
 };
 
-module.exports = scrape;
+module.exports = termAndDefinitions;

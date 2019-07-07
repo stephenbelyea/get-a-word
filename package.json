@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "(cd server && npm i); (cd client && npm i);",
-    "start": "concurrently \"cd server && npm start\" \"cd client && npm start\""
+    "start:server": "cd server && npm start",
+    "start:client": "cd client && npm start",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\""
   },
   "repository": {
     "type": "git",

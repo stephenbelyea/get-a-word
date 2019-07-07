@@ -1,5 +1,5 @@
 const express = require('express');
-const { getTermAndDefinitions } = require('./scrape');
+const { getTermAndDefinitions } = require('./term-and-definitions');
 
 const app = express();
 
@@ -8,6 +8,10 @@ app.listen(3001, () => {
 });
 
 app.get('/term-and-definitions', async (req, res, next) => {
-  const termAndDefinitions = await getTermAndDefinitions();
-  res.json(termAndDefinitions);
+  try {
+    const termAndDefinitions = await getTermAndDefinitions();
+    res.json(termAndDefinitions);
+  } catch (e) {
+    res.status(500).send({ error: e });
+  }
  });
